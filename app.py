@@ -1,12 +1,9 @@
-def wsgi_app(environ, start_response):
-    status = '200 OK'
-    response_headers = [('Content-type', 'text/plain')]
-    start_response(status, response_headers)
-    response_body = 'Hello World'
-    yield response_body.encode()
+from flask import Flask
+app = Flask(__name__)
 
-if __name__ == '__main__':
-    from wsgiref.simple_server import make_server
+@app.route("/")
+def hello():
+    return "Hello World!dasdasdas"
 
-    httpd = make_server('localhost', 5555, wsgi_app)
-    httpd.serve_forever()
+if __name__ == "__main__":
+    app.run()
