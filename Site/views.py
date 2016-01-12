@@ -2,10 +2,11 @@ from flask import render_template, flash, redirect, url_for
 from Site import app
 from .forms import LoginForm
 
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager, UserMixin, login_user, logout_user,\
-    current_user
 from oauth import OAuthSignIn
+from models import User
+from models import db
+from flask_login import login_user, logout_user, current_user
+
 
 @app.route('/')
 def index():
@@ -41,7 +42,6 @@ def login():
     return render_template("login.html",
                            title='Sign In',
                            form=form)
-
 
 
 
