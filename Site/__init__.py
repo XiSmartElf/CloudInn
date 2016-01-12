@@ -1,6 +1,16 @@
 from flask import Flask
 app = Flask(__name__)
+# <<<<<<< HEAD
+app.config.from_object('config')
 
-@app.route("/")
-def main():
-    return "Hello World!"
+from Site import views
+
+
+
+
+# =======
+#
+# @app.route("/")
+# def main():
+#     return "Hello World!"
+# >>>>>>> master
