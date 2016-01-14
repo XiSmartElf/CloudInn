@@ -5,7 +5,10 @@ from .forms import LoginForm
 from oauth import OAuthSignIn
 from models import User
 from models import db
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, LoginManager
+
+
+lm = LoginManager(app)
 
 
 @app.route('/')
@@ -75,3 +78,8 @@ def oauth_callback(provider):
         db.session.commit()
     login_user(user, True)
     return redirect(url_for('index'))
+
+
+@lm.user_loader
+def load_user(id):
+    return User.query.get(int(id))
