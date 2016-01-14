@@ -1,0 +1,26 @@
+html,
+body {
+  height: 70%;
+}
+
+body {
+  background-color: #86cce5;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+#blink {
+  pointer-events: none;
+}
+
+#power,
+#camera--switch {
+  cursor: pointer;
+}
+
+#text1 {
+  
+}
