@@ -9,10 +9,12 @@ from flask_login import login_user, logout_user, current_user, LoginManager
 
 
 lm = LoginManager(app)
-
-
 @app.route('/')
 def index():
+    return render_template("index.html")
+
+@app.route('/authenticate')
+def authenticate():
     user = {'nickname': 'Lan'}  # fake user
     posts = [  # fake array of posts
         {
