@@ -8,12 +8,6 @@ from models import db
 from flask_login import login_user, logout_user, current_user, LoginManager
 
 lm = LoginManager(app)
-<<<<<<< HEAD:Site/views.py
-@app.route('/')
-def index():
-    return render_template("index.html")
-=======
->>>>>>> origin/master:Site/LoginController.py
 
 @app.route('/authenticate')
 def authenticate():
