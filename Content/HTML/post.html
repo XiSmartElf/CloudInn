@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<title>CloudInn</title>
+		<script type="text/javascript" async="" src="http://stats.g.doubleclick.net/dc.js"></script>
+		<link rel='stylesheet' type='text/css' href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel='stylesheet' type='text/css' href="https://s3-us-west-2.amazonaws.com/cloudinn/Content/CSS/post.css">
+		<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Roboto:400,500,300,700' >
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-resource.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-route.js"></script>
+        <script src="Content/JavaScript/post.js"></script>
+        <base href="/">
+	</head>
+    <body ng-app="postApp">
+        <div class="wrapper" ng-controller="postController">
+            <div class="top" >
+                <div class="title">
+                    <h1>{{postTitle}}</h1>
+                </div>
+            </div>
+            <div class="content">
+                <div class="card first">
+                    <h2><a href="#">Just a blog post</a></h2>
+                    <p class="date">{{postDate}}</p>
+                    <p class="text"> {{postText}}</p>
+                    <img src="tweeter.png">
+                </div>
+          </div>
+        </div>
+    </body>
+</html>

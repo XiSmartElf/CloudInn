@@ -1,4 +1,4 @@
-from flask import render_template, request, Response,send_from_directory
+from flask import  request, Response,send_from_directory
 from Site import app
 import json
 import os
@@ -18,11 +18,11 @@ def getPostArticle(postId):
 
 @app.route('/Content/<path:dir>')
 def serve_static(dir):
-    root_dir = os.path.dirname(os.getcwd())+"\CloudInn\Site\\templates\\"
     tokens = dir.split("/");
     contentType = tokens[0];
     filename = tokens[1];
-    res= send_from_directory(os.path.join(root_dir, 'Content', contentType), filename)
+    completePath = os.path.join(os.getcwd(),"Site","templates","Content",contentType)
+    res= send_from_directory(completePath, filename)
     return res
 
 class Test:
