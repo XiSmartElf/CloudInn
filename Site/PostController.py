@@ -3,7 +3,7 @@ from Site import app
 import Cors
 import json
 
-@Cors.crossdomain(origin='*')
+@Cors.crossdomain(origin='http://localhost')
 @app.route('/post',methods=['GET'])
 def post():
     postId = request.args.get('id')

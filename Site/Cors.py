@@ -4,6 +4,7 @@ from functools import update_wrapper
 
 ''' Wrapper fucntions for CORS '''
 
+
 def crossdomain(origin=None, methods=None, headers=None,
                 max_age=21600, attach_to_all=True,
                 automatic_options=True):
@@ -42,4 +43,5 @@ def crossdomain(origin=None, methods=None, headers=None,
         f.provide_automatic_options = False
         f.required_methods = ['OPTIONS']
         return update_wrapper(wrapped_function, f)
+
     return decorator
