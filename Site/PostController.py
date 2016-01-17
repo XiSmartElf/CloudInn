@@ -1,20 +1,18 @@
 from flask import render_template, request, Response
 from Site import app
-import Cors
 import json
 
-@Cors.crossdomain(origin='http://localhost')
 @app.route('/post',methods=['GET'])
 def post():
     postId = request.args.get('id')
     return render_template("post.html")
 
-@Cors.crossdomain(origin='http://localhost')
 @app.route('/postdata/<int:postId>', methods=['GET'])
 def getPostArticle(postId):
     post = Test()
     data = json.dumps(post.__dict__)
     res = Response(data, status=200, mimetype='application/json')
+    res.headers['Access-Control-Allow-Origin'] = "*"
     return res
 
 
