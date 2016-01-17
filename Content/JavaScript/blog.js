@@ -1,5 +1,4 @@
-
-var postApp = angular.module("postApp", ['ngRoute'])
+var blogApp = angular.module("blogApp", ['ngRoute'])
 postApp.config(function ($locationProvider, $httpProvider)
 {
     $locationProvider.html5Mode(true);
@@ -7,20 +6,14 @@ postApp.config(function ($locationProvider, $httpProvider)
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-postApp.controller("postController", function($scope, $http, $location, $window) {
-    $scope.postData = {};
+postApp.controller("blogPostController", function($scope, $http, $location, $window) {
+    $scope.PostsOverviewData{};
+    $scope.numOfPostLoaded = 0;
     this.Init = function()
     {
-         var postId = $location.search().id;
-         if(!postId)
-         {
-            $window.location.href = 'post?id=1';
-            return;
-         }
-
          var responsePromise = $http(
          {
-            url: "postdata/"+postId,
+            url: "getPostsOverview?"+,
             method: "GET",
             headers: { "Accept": "application/json" }
          })
