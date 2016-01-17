@@ -9,6 +9,7 @@ def post():
     postId = request.args.get('id')
     return render_template("post.html")
 
+@Cors.crossdomain(origin='http://localhost')
 @app.route('/postdata/<int:postId>', methods=['GET'])
 def getPostArticle(postId):
     post = Test()
