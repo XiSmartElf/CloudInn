@@ -1,10 +1,10 @@
 from flask import render_template
-from flask import request
 from Site import app
+from StaticServeController import serve_static
 
 
 @app.route('/',methods=['GET'])
 def index():
-    return render_template("index.html")
+    return serve_static("HTML/index.html")
 
 

@@ -1,7 +1,7 @@
-from flask import  request, Response,send_from_directory
+from flask import  request, Response
 from Site import app
 import json
-import os
+from StaticServeController import serve_static
 
 @app.route('/post',methods=['GET'])
 def post():
@@ -14,15 +14,6 @@ def getPostArticle(postId):
     data = json.dumps(post.__dict__)
     res = Response(data, status=200, mimetype='application/json')
     res.headers['Access-Control-Allow-Origin'] = "*"
-    return res
-
-@app.route('/Content/<path:dir>')
-def serve_static(dir):
-    tokens = dir.split("/");
-    contentType = tokens[0];
-    filename = tokens[1];
-    completePath = os.path.join(os.getcwd(),"Site","templates","Content",contentType)
-    res= send_from_directory(completePath, filename)
     return res
 
 class Test:
