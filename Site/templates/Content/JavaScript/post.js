@@ -15,15 +15,15 @@
             this.Init = function()
             {
                 var postId = $location.search().id;
-                if(postId)
+                if(!postId)
                 {
-                    $window.location.href = 'post/?id=1';
+                    $window.location.href = 'post?id=1';
                     return;
                 }
 
                 var responsePromise = $http(
                     {
-                        url: "http://cloudinn.azurewebsites.net/postdata/1",
+                        url: "postdata/"+postId,
                         method: "GET",
                         headers: { "Accept": "application/json" }
                     }
@@ -31,6 +31,10 @@
 
                 responsePromise.success(function(data, status, headers, config) {
                     $scope.postData=data;
+                    $scope.postTitle = data.title;
+                    $scope.postDate = data.date;
+                    $scope.postText = data.text;
+
                 });
                 responsePromise.error(function(data, status, headers, config) {
                     alert("AJAX failed!");
