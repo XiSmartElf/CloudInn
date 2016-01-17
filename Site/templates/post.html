@@ -8,21 +8,24 @@
 		<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Roboto:400,500,300,700' >
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-resource.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-route.js"></script>
+        <script src="Content/JavaScript/post.js"></script>
+        <base href="/">
 	</head>
-    <body>
+    <body ng-app="postApp">
         <div class="wrapper">
-            <div class="top">
+            <div class="top" ng-controller="postController">
                 <div class="title">
-                    <h1>Material Style Blog</h1>
+                    <h1>{{postTitle}}</h1>
                 </div>
             </div>
             <div class="content">
                 <div class="card first">
                     <h2><a href="#">Just a blog post</a></h2>
-                    <p class="date">26 October, 2014</p>
-                    <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Donec ut libero sed arcu vehicula ultricies a non tortor. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. 
-                <br />
-                    Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci.</p>
+                    <p class="date">{{postDate}}</p>
+                    <p class="text"> {{postText}}</p>
                     <img src="tweeter.png">
                 </div>
           </div>

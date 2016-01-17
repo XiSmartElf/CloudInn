@@ -1,9 +1,9 @@
-from flask import render_template
-from flask import request
-from flask import Response
+from flask import render_template, request, Response
 from Site import app
+import Cors
 import json
 
+@Cors.crossdomain(origin='*')
 @app.route('/post',methods=['GET'])
 def post():
     postId = request.args.get('id')
