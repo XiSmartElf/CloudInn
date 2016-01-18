@@ -39,3 +39,4 @@ class postOverview:
         postOverview.static-=1
         postOverview.staticId +=1;
         self.postDescription = "description"
+        self.imgSrc = "Content/Image/CloudStorage.jpg"

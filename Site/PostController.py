@@ -23,7 +23,7 @@ class Test:
         self.id=1
         self.text="22"
         self.title="26"
-        self.date = "10/"+Test.static+"/2016"
+        self.date = "10/"+str(Test.static)+"/2016"
         Test.static+=1
 
         __this=1111
