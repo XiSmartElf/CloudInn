@@ -331,3 +331,88 @@ nav.menu ul a:hover {
   background-color: #e43321;
   border-color: #d62c1a;
 }
+#loading {
+  height: 40px;
+  margin: 5em auto;
+  position: relative;
+  width: 40px;
+}
+
+#loading > p {
+  bottom: -4em;
+  color: #FFFFFF;
+  font: 1em Helvetica, Arial, sans-serif;
+  left: -25px;
+  letter-spacing: 1px;
+  position: absolute;
+  text-align: center;
+  width: 100px;
+}
+
+#loading:before,
+#loading:after,
+#loading > span:before,
+#loading > span:after {
+  background: #FFFFFF;
+  border-radius: 10px;
+  content: "";
+  display: block;
+  height: 10px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 10px;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+}
+
+#loading:before {
+  animation-name: move-right;
+}
+
+#loading:after {
+  animation-name: move-down;
+}
+
+#loading > span:before {
+  animation-name: move-left;
+}
+
+#loading > span:after {
+  animation-name: move-up;
+}
+
+@keyframes move-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(30px);
+  }
+}
+
+@keyframes move-down {
+  0% {
+    transform: translate(30px, 0);
+  }
+  100% {
+    transform: translate(30px, 30px);
+  }
+}
+
+@keyframes move-left {
+  0% {
+    transform: translate(30px, 30px);
+  }
+  100% {
+    transform: translate(0, 30px);
+  }
+}
+
+@keyframes move-up {
+  0% {
+    transform: translate(0, 30px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}

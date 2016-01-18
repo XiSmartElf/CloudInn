@@ -73,10 +73,7 @@ blogApp.factory('Overview', function($http)
 
 blogApp.controller("blogPostController", function($scope, $http, Overview) {
     var self = this;
-    $scope.postsOverviewData =new Array();
-    $scope.earliestDate = GetTodayDate();
     $scope.overview = new Overview();
-
     self.Init = function()
     {
         $scope.overview.loadMore();

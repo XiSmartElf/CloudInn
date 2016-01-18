@@ -387,7 +387,7 @@
 		      </div>
 		   </aside>
 		   <div class="blog" ng-controller="blogPostController as postController" ng-init="postController.Init()">
-              <div  infinite-scroll='overview.loadMore()' infinite-scroll-disabled='overview.busy' infinite-scroll-distance='1'>
+              <div  infinite-scroll='overview.loadMore()' infinite-scroll-disabled='overview.busy' infinite-scroll-distance='0'>
                 <div class="conteudo" ng-repeat="curPostOverview in overview.postsOverviewData">
                     <div class="post-info">
                         Posted by {{curPostOverview.postDate}}
@@ -402,7 +402,9 @@
                         </a>
                     </div>
                 </div>
-                <div ng-show='overview.busy'>Loading data...</div>
+                <div id ="loading" ng-show='overview.busy'>
+                    <span></span>
+                    <p>loading…</p></div>
               </div>
 		   </div>
 		</div>
