@@ -6,12 +6,17 @@
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/utils/Draggable.min.js"></script>
   		<script type="text/javascript" async="" src="Content/JavaScript/cloudMountain.js"></script>
-		<!--<script type="text/javascript" async="" src="/Content/JavaScript/blog.js"></script>-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-resource.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-route.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ngInfiniteScroll/1.2.1/ng-infinite-scroll.js"></script>
+		<script src="/Content/JavaScript/blog.js"></script>
 		<link rel="stylesheet" href="Content/CSS/cloudMountain.css">
 		<link rel="stylesheet" href="Content/CSS/blog.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<base href="/">
 	</head>
-	<body>
+	<body ng-app="blogApp">
 		</br>
 		<img src="Content/Image/qrcode.png" style="margin-left:5%">
 		<p style="margin-left:5%">关注云门客栈</p>
@@ -381,41 +386,24 @@
 		         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 		      </div>
 		   </aside>
-		   <div class="blog">
-		      <div class="conteudo">
-		         <div class="post-info">
-		            Posted by Xi He
-		         </div>
-		         <img src="Content/Image/CloudStorage.jpg">
-		         <h1> Lorem Ipsum Dolor </h1>
-		         <hr>
-		         <p>
-		            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		         </p>
-		         <p>
-		            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		         </p>
-		         <div class="buttonAlign">
-		         <button href="#" class="btn-stroke btn-primary">Read more</button>
-		         </div>
-		      </div>
-		      <div class="conteudo">
-		         <div class="post-info">
-		            Posted by Xi He
-		         </div>
-		         <img src="http://designculture.com.br/wp-content/uploads/2013/07/14.-flat-design.jpg">
-		         <h1> Lorem Ipsum Dolor </h1>
-		         <hr>
-		         <p>
-		            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		         </p>
-		         <p>
-		            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		         </p>
-		         <div class="buttonAlign">
-		         	<button href="#" class="btn-stroke btn-primary">Read more</button>
-		         </div>
-		      </div>
+		   <div class="blog" ng-controller="blogPostController as postController" ng-init="postController.Init()">
+              <div  infinite-scroll='overview.loadMore()' infinite-scroll-disabled='overview.busy' infinite-scroll-distance='1'>
+                <div class="conteudo" ng-repeat="curPostOverview in overview.postsOverviewData">
+                    <div class="post-info">
+                        Posted by {{curPostOverview.postDate}}
+                    </div>
+                    <!--<img src="Content/Image/CloudStorage.jpg">-->
+                    <h1>{{curPostOverview.postTitle}}</h1>
+                    <hr>
+                    <p>{{curPostOverview.postDescription}}</p>
+                    <div class="buttonAlign">
+                        <a ng-href="/post?id={{curPostOverview.postId}}" target="_blank">
+                            <button class="btn-stroke btn-primary">Read more</button>
+                        </a>
+                    </div>
+                </div>
+                <div ng-show='overview.busy'>Loading data...</div>
+              </div>
 		   </div>
 		</div>
 	</body>

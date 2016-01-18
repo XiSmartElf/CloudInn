@@ -1,4 +1,3 @@
-
 var postApp = angular.module("postApp", ['ngRoute'])
 postApp.config(function ($locationProvider, $httpProvider)
 {

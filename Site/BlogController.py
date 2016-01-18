@@ -7,13 +7,22 @@ import json
 def index():
     return serve_static("HTML/index.html")
 
-@app.route('/getPostsOverview',methods=['GET'])
-def getPostsOverview():
-    postIds = request.values.getlist('id')
+@app.route('/getPostsOverviewBeforeDate',methods=['GET'])
+def getPostsOverviewBeforeDate():
+    #postIds = request.values.getlist('id')
+    date = request.args.get('date')
+    numOfPost = int(request.args.get('numOfPost'))
+    if numOfPost > 10 or numOfPost<=0 or date == 'undefined':
+        return Response(
+                json.dumps(
+                {"error":"Please query between 1 to 10 posts; Please specify a date"}),
+                status=400,
+                mimetype='application/json')
+
+    postsSinceDate  = [postOverview(1),postOverview(2)]
     postsOverview = []
-    for postId in postIds:
-        overview = postOverview(postId)
-        postsOverview.append(overview.__dict__)
+    for post in postsSinceDate:
+        postsOverview.append(post.__dict__)
 
     data = json.dumps(postsOverview)
     res = Response(data, status=200, mimetype='application/json')
@@ -21,9 +30,10 @@ def getPostsOverview():
     return res
 
 class postOverview:
-
+    static = 30;
     def __init__(self, postId):
         self.postId=postId
         self.postTitle="title"
-        self.postDate ="10/20/2013"
+        self.postDate ="10/"+str(postOverview.static)+"/2013"
+        postOverview.static-=1
         self.postDescription = "description"

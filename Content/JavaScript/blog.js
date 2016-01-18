@@ -1,34 +1,121 @@
-var blogApp = angular.module("blogApp", ['ngRoute'])
-postApp.config(function ($locationProvider, $httpProvider)
+var blogApp = angular.module("blogApp",  ['infinite-scroll'])
+blogApp.config(function ($httpProvider)
 {
-    $locationProvider.html5Mode(true);
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-postApp.controller("blogPostController", function($scope, $http, $location, $window) {
-    $scope.PostsOverviewData{};
-    $scope.numOfPostLoaded = 0;
-    this.Init = function()
+blogApp.factory('Overview', function($http)
+{
+    var Overview = function()
     {
-         var responsePromise = $http(
+        this.postsOverviewData =new Array();
+        this.busy = false;
+        this.earliestDate = GetTodayDate();
+        this.dupVerification = {};
+    };
+    
+    Overview.prototype.loadMore = function() 
+    {
+        if (this.busy) return;
+        this.busy = true;       
+        var responsePromise = $http(
          {
-            url: "getPostsOverview?"+,
+            url: "getPostsOverviewBeforeDate?"+"date="+this.earliestDate+"&"+"numOfPost=5",
             method: "GET",
             headers: { "Accept": "application/json" }
          })
 
          responsePromise.success(function(data, status, headers, config) {
-            $scope.postData=data;
-            $scope.postTitle = data.title;
-            $scope.postDate = data.date;
-            $scope.postText = data.text;
-         });
+            var earliestDateInData = null;
+            for(var i = 0; i < data.length; i++) 
+            {
+                var onePostOverview = data[i];
+                onePostOverview.postDate = ConstructDate(onePostOverview.postDate);
+                if(this.dupVerification[onePostOverview.postId]!=undefined)
+                {
+                    console.log("duplicate post overview received from server, postId= "+onePostOverview.postId);
+                    return;
+                }
+                
+                this.dupVerification[onePostOverview.postId] = onePostOverview;
+                             
+                if(earliestDateInData==null)
+                {
+                    earliestDateInData = onePostOverview.postDate;
+                }
+                else
+                {
+                    if(onePostOverview.postDate < earliestDateInData)
+                    {
+                        earliestDateInData = onePostOverview.postDate;
+                    }
+                }
+                
+                this.earliestDate = earliestDateInData;
+                this.postsOverviewData.push(onePostOverview);
+            }
+
+            this.postsOverviewData.sort(function(o1,o2){
+                return new Date(o1.postDate) - new Date(o2.postDate);
+            });
+            
+            this.busy = false;                 
+         }.bind(this));
+         
          responsePromise.error(function(data, status, headers, config) {
             alert("AJAX failed!");
          });
+    }
+    
+    return Overview;
+});
 
+blogApp.controller("blogPostController", function($scope, $http, Overview) {
+    var self = this;
+    $scope.postsOverviewData =new Array();
+    $scope.earliestDate = GetTodayDate();
+    $scope.overview = new Overview();
+
+    self.Init = function()
+    {
+        $scope.overview.loadMore();
+    }
+});
+
+// $(window).scroll(function() {
+//     if($(window).scrollTop() == $(document).height() - $(window).height()) {
+//            // ajax call get data from server and append to the div
+//     }
+// });
+
+function GetTodayDate()
+{
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+        dd='0'+dd
     }
 
-    this.Init();
-});
+    if(mm<10) {
+        mm='0'+mm
+    }
+
+    today = mm+'/'+dd+'/'+yyyy;
+    return today;
+};
+
+function ConstructDate(data)
+{
+    //dateFormat: mm/dd/yyyy
+    var dateInfo = data.split("/");
+    var month =dateInfo[0];
+    var day = dateInfo[1];
+    var year = dateInfo[2];
+    var dateExtracted = new Date(year,month,day);
+    return dateExtracted;
+};
+
