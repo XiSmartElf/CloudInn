@@ -31,9 +31,11 @@ def getPostsOverviewBeforeDate():
 
 class postOverview:
     static = 30;
+    staticId = 1;
     def __init__(self, postId):
-        self.postId=postId
+        self.postId=postOverview.staticId
         self.postTitle="title"
         self.postDate ="10/"+str(postOverview.static)+"/2013"
         postOverview.static-=1
+        postOverview.staticId +=1;
         self.postDescription = "description"

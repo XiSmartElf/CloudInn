@@ -115,7 +115,7 @@ function ConstructDate(data)
     var month =dateInfo[0];
     var day = dateInfo[1];
     var year = dateInfo[2];
-    var dateExtracted = new Date(year,month,day);
+    var dateExtracted = new Date(year,month-1,day);
     return dateExtracted;
 };
 
