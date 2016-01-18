@@ -3,6 +3,7 @@ from Site import app
 import json
 from StaticServeController import serve_static
 
+
 @app.route('/post',methods=['GET'])
 def post():
     postId = request.args.get('id')
