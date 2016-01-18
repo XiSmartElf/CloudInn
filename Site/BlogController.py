@@ -9,7 +9,6 @@ def index():
 
 @app.route('/getPostsOverviewBeforeDate',methods=['GET'])
 def getPostsOverviewBeforeDate():
-    #postIds = request.values.getlist('id')
     date = request.args.get('date')
     numOfPost = int(request.args.get('numOfPost'))
     if numOfPost > 10 or numOfPost<=0 or date == 'undefined':
@@ -20,6 +19,10 @@ def getPostsOverviewBeforeDate():
                 mimetype='application/json')
 
     postsSinceDate  = [postOverview(1),postOverview(2)]
+    if len(postsSinceDate)==0:
+        return Response(json.dumps('',status=404,mimetype='application/json'))
+
+    #Convert result to JSON.
     postsOverview = []
     for post in postsSinceDate:
         postsOverview.append(post.__dict__)
