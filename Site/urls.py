@@ -14,16 +14,17 @@ Including another URLconf
     2. Import the include() function: from django.conf.urls import url, include
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import url
-from django.contrib import admin
-from django.conf.urls.static import static
 from django.conf import settings
-import BlogController, PostController
+from django.conf.urls import url
+from django.conf.urls.static import static
+from django.contrib import admin
+
+from Site.Controller import BlogController,PostController
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$',BlogController.getBlogPage, name='blogPage'),
-    url(r'^getPostsOverviewBeforeDate', BlogController.getPostsOverviewBeforeDate,name='blogData'),
-    url(r'^post$', PostController.post,name='postPage'),
-    url(r'^postdata/(?P<postId>\d+)$', PostController.getPostArticle,name='postData')
+    url(r'^$', BlogController.getBlogPage, name='blogPage'),
+    url(r'^getPostsOverviewBeforeDate', BlogController.getPostsOverviewBeforeDate, name='blogData'),
+    url(r'^post$', PostController.post, name='postPage'),
+    url(r'^postdata/(?P<postId>\d+)$', PostController.getPostArticle, name='postData')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
