@@ -1,26 +1,30 @@
-from flask import request,Response
-from Site import app
-from StaticServeController import serve_static
+from django.http import HttpResponse
+from django.views.decorators.http import require_http_methods
+from django.conf import settings
 import json
+import os
 
-@app.route('/',methods=['GET'])
-def index():
-    return serve_static("HTML/index.html")
+@require_http_methods(["GET"])
+def getBlogPage(request):
+    abspath = os.path.join(settings.MEDIA_ROOT,'HTML','index.html')
+    data = open(abspath).read()
+    response = HttpResponse(content=data)
+    return response
 
-@app.route('/getPostsOverviewBeforeDate',methods=['GET'])
-def getPostsOverviewBeforeDate():
-    date = request.args.get('date')
-    numOfPost = int(request.args.get('numOfPost'))
-    if numOfPost > 10 or numOfPost<=0 or date == 'undefined':
-        return Response(
+@require_http_methods(["GET"])
+def getPostsOverviewBeforeDate(request):
+    date = request.GET.get('date', None)
+    numOfPost = int(request.GET.get('numOfPost',1))
+    if numOfPost > 10 or numOfPost<=0 or date is None:
+        return HttpResponse(
                 json.dumps(
                 {"error":"Please query between 1 to 10 posts; Please specify a date"}),
                 status=400,
-                mimetype='application/json')
+                content_type="application/json")
 
     postsSinceDate  = [postOverview(1),postOverview(2)]
     if len(postsSinceDate)==0:
-        return Response(json.dumps('',status=404,mimetype='application/json'))
+        return HttpResponse(json.dumps(''),status=404,content_type="application/json")
 
     #Convert result to JSON.
     postsOverview = []
@@ -28,8 +32,7 @@ def getPostsOverviewBeforeDate():
         postsOverview.append(post.__dict__)
 
     data = json.dumps(postsOverview)
-    res = Response(data, status=200, mimetype='application/json')
-    res.headers['Access-Control-Allow-Origin'] = "*"
+    res = HttpResponse(data, status=200, content_type="application/json")
     return res
 
 class postOverview:

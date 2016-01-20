@@ -1,6 +1,6 @@
 from Site import app, dynamo
 
-@app.route('/create_post')
+@app.route('/createpost')
 def create_post():
     with app.app_context():
            dynamo.create_all()

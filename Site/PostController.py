@@ -1,20 +1,22 @@
-from flask import  request, Response
-from Site import app
+from django.http import HttpResponse
+from django.views.decorators.http import require_http_methods
+from django.conf import settings
 import json
-from StaticServeController import serve_static
+import os
 
+@require_http_methods(["GET"])
+def post(request):
+    postId = request.GET.get('id', None)
+    abspath = os.path.join(settings.MEDIA_ROOT,'HTML','post.html')
+    data = open(abspath).read()
+    response = HttpResponse(content=data)
+    return response
 
-@app.route('/post',methods=['GET'])
-def post():
-    postId = request.args.get('id')
-    return serve_static("HTML/post.html")
-
-@app.route('/postdata/<int:postId>', methods=['GET'])
-def getPostArticle(postId):
+@require_http_methods(["GET"])
+def getPostArticle(request, postId):
     post = Test()
     data = json.dumps(post.__dict__)
-    res = Response(data, status=200, mimetype='application/json')
-    res.headers['Access-Control-Allow-Origin'] = "*"
+    res = HttpResponse(data, status=200, content_type='application/json')
     return res
 
 class Test:
