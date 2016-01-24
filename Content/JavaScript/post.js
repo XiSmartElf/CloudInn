@@ -1,4 +1,5 @@
 var postApp = angular.module("postApp", ['ngRoute'])
+    
 postApp.config(function ($locationProvider, $httpProvider)
 {
     $locationProvider.html5Mode(true);
@@ -7,7 +8,6 @@ postApp.config(function ($locationProvider, $httpProvider)
 });
 
 postApp.controller("postController", function($scope, $http, $location, $window) {
-    $scope.postData = {};
     this.Init = function()
     {
          var postId = $location.search().id;
@@ -25,16 +25,23 @@ postApp.controller("postController", function($scope, $http, $location, $window)
          })
 
          responsePromise.success(function(data, status, headers, config) {
-            $scope.postData=data;
             $scope.postTitle = data.title;
             $scope.postDate = data.date;
-            $scope.postText = data.text;
+            $scope.postContent = data.content;
+            $scope.postAuthor = data.author;
          });
          responsePromise.error(function(data, status, headers, config) {
             alert("AJAX failed!");
          });
-
     }
-
+    
+    $scope.checkIfImg = function(part)
+    {
+        if(part.substring(0, "this_is_a_img_src".length)=="this_is_a_img_src")
+            return true;
+        else   
+            return false;
+    }
+    
     this.Init();
 });

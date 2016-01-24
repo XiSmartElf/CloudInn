@@ -35,14 +35,3 @@ def getPostsOverviewBeforeDate(request):
     res = HttpResponse(data, status=200, content_type="application/json")
     return res
 
-class postOverview:
-    static = 30;
-    staticId = 1;
-    def __init__(self, postId):
-        self.postId=postOverview.staticId
-        self.postTitle="title"
-        self.postDate ="10/"+str(postOverview.static)+"/2013"
-        postOverview.static-=1
-        postOverview.staticId +=1;
-        self.postDescription = "description"
-        self.imgSrc = "Content/Image/CloudStorage.jpg"

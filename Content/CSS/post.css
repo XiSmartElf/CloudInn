@@ -45,6 +45,8 @@ body{
 .card img{
   display:block;
   margin:auto;
+  width:50%;
+  height:auto
 }
 .card h2 {
   font-size:21px;

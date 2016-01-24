@@ -1,0 +1,19 @@
+{
+  "postId": 1, 
+  
+  "title": "this is a title",
+    
+  "date": "this is a date",
+  
+  "author": "this is a author",
+  
+  "content": [
+    "first paragragh",
+    "this_is_a_img_src=Content/Image/posts/1_image1",
+    "second paragragh"
+  ],
+  
+  "description":"this is a description",
+  
+  "coverImg" : "Content/Image/CloudStorage.jpg"
+}

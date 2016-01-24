@@ -18,15 +18,17 @@
         <div class="wrapper" ng-controller="postController">
             <div class="top" >
                 <div class="title">
-                    <h1>{{postTitle}}</h1>
+                    <h1>CloudInn</h1>
                 </div>
             </div>
             <div class="content">
                 <div class="card first">
-                    <h2><a href="#">Just a blog post</a></h2>
-                    <p class="date">{{postDate}}</p>
-                    <p class="text"> {{postText}}</p>
-                    <img src="tweeter.png">
+                    <h2><a href="#">{{postTitle}}</a></h2>
+                    <p class="date">{{postDate}} by {{postAuthor}}</p>
+                    <div ng-repeat="part in postContent" class="content"> 
+                        <p ng-if="!checkIfImg(part)">{{part}}</p>
+                        <img ng-show="checkIfImg(part)" src={{part.split("=")[1]}}>
+                    </div>
                 </div>
           </div>
         </div>
