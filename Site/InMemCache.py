@@ -1,5 +1,4 @@
 from threading import Thread
-import thread
 import time
 from Site.DataAccessLayer.PostsDataAccessLayer import PostsDataAccessLayer
 
@@ -18,6 +17,7 @@ class InMemCache(Thread):
             self.__postCollection[str(postId)]=post
             return post
 
+    #tempory method to deal with blog post overview.
     def getAllPosts(self):
         if self.__postCollection is not None:
             return self.__postCollection.values()
@@ -25,19 +25,9 @@ class InMemCache(Thread):
             self.__postCollection = self.__postDal.getPosts()
             return self.__postCollection.values()
 
-    # ***** background sync related function **********
-    # def initBackgroundSycJobs(self):
-    #     self.__startS3SycThread()
-
     def __S3SycJob(self):
         #todo: create merge method to do delta get only.
         self.__postCollection = self.__postDal.getPosts()
-
-
-    # def __startS3SycThread(self):
-    #     S3SycThread = Thread(name = 'backgroundSycJob', target = InMemCache.__S3SycJob())
-    #     S3SycThread.setDaemon(True)
-    #     S3SycThread.start()
 
     def run(self):
         while True:

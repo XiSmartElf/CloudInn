@@ -45,7 +45,7 @@ class S3DataRepository:
     #     for key in s3client.list_objects(Bucket=bucket)['posts/schema.json']:
     #         print key
 
-    def exsit(self):
+    def exists(self):
         s3 = self.__createSession()
         try:
             s3.Object('my-bucket', 'dootdoot.jpg').load()

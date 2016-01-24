@@ -27,6 +27,7 @@ class Post:
         # post.s3_raw_json = json
         return post
 
+    #define two static vars for mocking id and date.
     static = 30
     staticId = 1
     def getPostOverview(self):
@@ -39,11 +40,3 @@ class Post:
         postOverview['postDescription'] = self.description
         postOverview['coverImg'] = self.coverImg
         return postOverview
-
-
-# test = PostsDataAccessLayer()
-# json_dict = test.getPosts([1])
-# post = Post()
-# post.constructFromJson(json_dict[str(1)])
-# test.getPosts()
-# test.getAllPostNames()

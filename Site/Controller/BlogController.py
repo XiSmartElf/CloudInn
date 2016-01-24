@@ -5,6 +5,7 @@ import json
 import os
 from Site.InMemCache import InMemCache
 
+#Build a in memory cache to serve request.
 cache = InMemCache()
 cache.start()
 
