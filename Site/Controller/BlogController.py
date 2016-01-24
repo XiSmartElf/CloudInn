@@ -3,6 +3,7 @@ from django.views.decorators.http import require_http_methods
 from django.conf import settings
 import json
 import os
+from Site.InMemCache import InMemCache
 
 @require_http_methods(["GET"])
 def getBlogPage(request):
@@ -22,16 +23,20 @@ def getPostsOverviewBeforeDate(request):
                 status=400,
                 content_type="application/json")
 
-    postsSinceDate  = [postOverview(1),postOverview(2)]
+    postsSinceDate  = InMemCache.getAllPosts()
     if len(postsSinceDate)==0:
-        return HttpResponse(json.dumps(''),status=404,content_type="application/json")
+        return HttpResponse(json.dumps(''),
+                            status=404,
+                            content_type="application/json")
 
     #Convert result to JSON.
     postsOverview = []
     for post in postsSinceDate:
-        postsOverview.append(post.__dict__)
+        postsOverview.append(post.getPostOverview().__dict__)
 
     data = json.dumps(postsOverview)
-    res = HttpResponse(data, status=200, content_type="application/json")
+    res = HttpResponse(data,
+                       status=200,
+                       content_type="application/json")
     return res
 
