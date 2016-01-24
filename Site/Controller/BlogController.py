@@ -5,6 +5,9 @@ import json
 import os
 from Site.InMemCache import InMemCache
 
+cache = InMemCache()
+cache.start()
+
 @require_http_methods(["GET"])
 def getBlogPage(request):
     abspath = os.path.join(settings.MEDIA_ROOT,'HTML','index.html')
@@ -23,7 +26,7 @@ def getPostsOverviewBeforeDate(request):
                 status=400,
                 content_type="application/json")
 
-    postsSinceDate  = InMemCache.getAllPosts()
+    postsSinceDate  = cache.getAllPosts()
     if len(postsSinceDate)==0:
         return HttpResponse(json.dumps(''),
                             status=404,
@@ -32,7 +35,7 @@ def getPostsOverviewBeforeDate(request):
     #Convert result to JSON.
     postsOverview = []
     for post in postsSinceDate:
-        postsOverview.append(post.getPostOverview().__dict__)
+        postsOverview.append(post.getPostOverview())
 
     data = json.dumps(postsOverview)
     res = HttpResponse(data,

@@ -1,42 +1,46 @@
-import threading
+from threading import Thread
+import thread
 import time
 from Site.DataAccessLayer.PostsDataAccessLayer import PostsDataAccessLayer
 
-class InMemCache:
+class InMemCache(Thread):
 
-    __postCollection = {}
-    __postDal = PostsDataAccessLayer()
+    def __init__(self):
+        Thread.__init__(self)
+        self.__postCollection = {}
+        self.__postDal = PostsDataAccessLayer()
 
-    @staticmethod
-    def getOnePost(postId):
-        if InMemCache.__postCollection.__contains__(postId):
-            return InMemCache.__postCollection[str(postId)]
+    def getOnePost(self,postId):
+        if self.__postCollection.__contains__(postId):
+            return self.__postCollection[str(postId)]
         else:
-            #todo:add it to collection.
-            return InMemCache.__postDal.getPosts([postId])[str(postId)]
+            post =  self.__postDal.getPosts([postId])[str(postId)]
+            self.__postCollection[str(postId)]=post
+            return post
 
-    @staticmethod
-    def getAllPosts():
-        if InMemCache.__postCollection is not None:
-            return InMemCache.__postCollection.items()
+    def getAllPosts(self):
+        if self.__postCollection is not None:
+            return self.__postCollection.values()
         else:
-            InMemCache.__postCollection = InMemCache.__postDal.getPosts()
-            return InMemCache.__postCollection.items()
+            self.__postCollection = self.__postDal.getPosts()
+            return self.__postCollection.values()
 
     # ***** background sync related function **********
-    @staticmethod
-    def initBackgroundSycJobs():
-        InMemCache.__startS3SycThread()
+    # def initBackgroundSycJobs(self):
+    #     self.__startS3SycThread()
 
-    @staticmethod
-    def __S3SycJob():
+    def __S3SycJob(self):
         #todo: create merge method to do delta get only.
-        InMemCache.__postCollection = InMemCache.__postDal.getPosts()
-        time.sleep(60)
+        self.__postCollection = self.__postDal.getPosts()
 
-    @staticmethod
-    def __startS3SycThread():
-        S3SycThread = threading.Thread(name = 'backgroundSycJob', target = InMemCache.__S3SycJob())
-        S3SycThread.setDaemon(True)
-        S3SycThread.start()
 
+    # def __startS3SycThread(self):
+    #     S3SycThread = Thread(name = 'backgroundSycJob', target = InMemCache.__S3SycJob())
+    #     S3SycThread.setDaemon(True)
+    #     S3SycThread.start()
+
+    def run(self):
+        while True:
+            self.__S3SycJob()
+            print 'Sync one time.'
+            time.sleep(60)

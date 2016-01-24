@@ -17,7 +17,7 @@ def post(request):
 
 @require_http_methods(["GET"])
 def getPostArticle(request, postId):
-    postId = 1
+    # postId = 1
     test = PostsDataAccessLayer()
     post = test.getPosts([postId])[str(postId)]
     data = json.dumps(post.__dict__)

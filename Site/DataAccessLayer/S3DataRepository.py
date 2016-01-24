@@ -3,8 +3,8 @@ from botocore.client import ClientError
 
 class S3DataRepository:
 
-    __access_key = 'sorry you cannot steal it this time'
-    __secret_key = 'just pay AWS and dont try to steal from github'
+    __access_key = 'AKIAIXLQOAPSWCA6ISEA'
+    __secret_key = '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'
 
     def __createSession(self):
         session = Session(aws_access_key_id=S3DataRepository.__access_key,
